@@ -1,7 +1,7 @@
 # Ice-Cream-Engine
 
 <div align="center">
-  <a href="https://fyrox.rs/">
+  <a href="https://github.com/Panhakonpapa/Ice-Cream-Engine/">
     <img src="ice.png" width="128" height="128" alt="Ice Cream" />
   </a>
   <h1>Ice-Cream Game engine written in C</h1>
