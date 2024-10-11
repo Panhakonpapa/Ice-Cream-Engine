@@ -5,4 +5,5 @@
   </a>
   <h1>Ice-Cream Game engine written in C </h1>
 </div>
-[![License (MIT)][(https://github.com/Panhakonpapa/Ice-Cream-Engine/blob/main/LICENSE)]
+![Language](https://img.shields.io/badge/language-C%2B%2B-orange.svg)
+
