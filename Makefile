@@ -15,7 +15,6 @@ all: $(EXEC)
 # Compiling Open GL loader 
 $(EXEC): $(OBJ)
 
-	@echo "Building $(EXEC) version $(VERSION)..."
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compile source files
