@@ -1,17 +1,28 @@
 #include "include/glad/glad.h"
 #include <GLFW/glfw3.h>
+#include <complex.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void error(unsigned int err) {
-  int  success;
-  char infoLog[512];
-  glGetShaderiv(err, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    glGetShaderInfoLog(err, 512, NULL, infoLog);
-    printf("Shader Compilation faliure %s\n", infoLog); 
-  }
-}
+typedef struct {
+
+  unsigned int VBO; 
+  unsigned int VAO; 
+  unsigned int EBO;
+
+} GraphicBuffer; 
+
+typedef  struct {
+
+  unsigned int vertexShader; 
+  unsigned int fragmentShader;
+  unsigned int ShaderProgram; 
+
+} GraphicShader;
+
+GraphicBuffer iceCreamRenderBuffer; 
+GraphicShader iceCreamShader;  
 
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -29,8 +40,74 @@ const char *fragmentShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    "   FragColor = vec4(1.0f, 0.5f, 0.5f, 1.0f);\n"
     "}\n\0";
+
+unsigned int CompilingShader() {
+   
+  iceCreamShader.vertexShader = glCreateShader(GL_VERTEX_SHADER); 
+  glShaderSource(iceCreamShader.vertexShader, 1, &vertexShaderSource, NULL); 
+  glCompileShader(iceCreamShader.vertexShader); 
+  
+  int  success;
+  char infoLog[512];
+  glGetShaderiv(iceCreamShader.vertexShader, GL_COMPILE_STATUS, &success);
+  if (!success) {
+    printf("Shader Compling failure %s\n", infoLog); 
+    exit(EXIT_FAILURE); 
+  }
+  
+  iceCreamShader.fragmentShader = glCreateShader(GL_FRAGMENT_SHADER); 
+  glShaderSource(iceCreamShader.fragmentShader , 1, &fragmentShaderSource, NULL); 
+  glCompileShader(iceCreamShader.fragmentShader );
+
+  glGetShaderiv(iceCreamShader.fragmentShader , GL_COMPILE_STATUS, &success);
+  if (!success) {
+    printf("Shader Compling failure %s\n", infoLog); 
+    exit(EXIT_FAILURE); 
+  }
+
+  iceCreamShader.ShaderProgram = glCreateProgram(); 
+  glAttachShader(iceCreamShader.ShaderProgram, iceCreamShader.vertexShader ); 
+  glAttachShader(iceCreamShader.ShaderProgram, iceCreamShader.fragmentShader ); 
+  glLinkProgram(iceCreamShader.ShaderProgram);
+
+  glGetProgramiv(iceCreamShader.ShaderProgram , GL_LINK_STATUS, &success);
+  if (!success) {
+    printf("Shader linking failure %s\n", infoLog); 
+    exit(EXIT_FAILURE); 
+  }
+
+  glDeleteShader(iceCreamShader.vertexShader); 
+  glDeleteShader(iceCreamShader.fragmentShader);
+
+  return iceCreamShader.ShaderProgram ; 
+}
+
+unsigned int drawTriangler() {
+
+  float vertices[] = {
+    -0.5f, -0.5f, 0.0f,
+     0.5f, -0.5f, 0.0f,
+     0.0f,  0.5f, 0.0f
+  };
+
+  
+  glGenBuffers(1, &iceCreamRenderBuffer.VBO); 
+  glGenBuffers(1, &iceCreamRenderBuffer.EBO); 
+  glGenVertexArrays(1, &iceCreamRenderBuffer.VAO);
+ 
+  /* requred by core OPEN GL */
+  glBindVertexArray(iceCreamRenderBuffer.VAO);
+
+  glBindBuffer(GL_ARRAY_BUFFER, iceCreamRenderBuffer.VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); 
+
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  glEnableVertexAttribArray(0);  
+ 
+  return iceCreamRenderBuffer.VAO;
+}
 
 int main() {
 
@@ -53,7 +130,7 @@ int main() {
   }
 
   // ------------------------------------
-  unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+  /*unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertexShader, 1, &vertexShaderSource, NULL); 
   glCompileShader(vertexShader); 
 
@@ -105,25 +182,30 @@ int main() {
 
    // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
   glBindVertexArray(0); 
- 
+ */ 
+  iceCreamShader.ShaderProgram = CompilingShader(); 
+  iceCreamRenderBuffer.VAO = drawTriangler(); 
+
   while(!glfwWindowShouldClose(window)) {
     processInput(window);
   
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(shaderProgram); 
-    glBindVertexArray(VAO);
+    glUseProgram(iceCreamShader.ShaderProgram); 
+    glBindVertexArray(iceCreamRenderBuffer.VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3); 
     /* shape position vec3 */
-    //glDrawArrays(GL_TRIANGLES, 0, 3); 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
+    //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
 
     glfwSwapBuffers(window);
     glfwPollEvents();    
 }
-  glDeleteVertexArrays(1, &VAO);
-  glDeleteBuffers(1, &VBO);
-  glDeleteProgram(shaderProgram);
+
+  glDeleteVertexArrays(1, &iceCreamRenderBuffer.VAO);
+  glDeleteBuffers(1, &iceCreamRenderBuffer.VBO);
+  glDeleteBuffers(1, &iceCreamRenderBuffer.EBO);
+  glDeleteProgram(iceCreamShader.ShaderProgram);
   glfwTerminate();
   return 0; 
 
