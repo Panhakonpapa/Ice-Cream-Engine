@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "/home/panha/myGame/include/glad/glad.h" 
+#include "/home/panha/Ice-Cream-Engine/include/glad/glad.h" 
 
 static void* get_proc(const char *namez);
 
