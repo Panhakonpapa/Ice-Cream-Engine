@@ -4,7 +4,7 @@ LDFLAGS = -lglfw -lGL -ldl -lm
 
 VERSION = 0.0.1
 # Source files
-SRC = grphicPipe.c src/glad.c
+SRC = main.c core/OpenGL.c core/IceCreamRender.c
 # Object files
 OBJ = $(SRC:.c=.o)
 # Final executable

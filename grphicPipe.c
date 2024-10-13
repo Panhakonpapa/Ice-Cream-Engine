@@ -1,9 +1,9 @@
-#include "include/glad/glad.h"
+#include "core/OpenGL.h"
+//#include "core/IceCreamRender.h"
 #include <GLFW/glfw3.h>
 #include <complex.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 typedef struct {
 
@@ -24,6 +24,7 @@ typedef  struct {
 typedef  struct {
   unsigned int QuadMesh; 
 }Graphic;
+
 
 /* Prodotype desgin */
 typedef struct {
@@ -206,8 +207,8 @@ int main() {
    // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
   glBindVertexArray(0); 
  */ 
-  iceCreamShader.ShaderProgram = CompilingShader(); 
-  iceCreamRenderer.QuadMesh = IceCreamRenderTringle(); 
+  //iceCreamShader.ShaderProgram = CompilingShader(); 
+  //iceCreamRenderer.QuadMesh = IceCreamRenderTringle(); 
 
   while(!glfwWindowShouldClose(window)) {
     processInput(window);
@@ -215,9 +216,9 @@ int main() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f); 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(iceCreamShader.ShaderProgram); 
-    glBindVertexArray(iceCreamRenderer.QuadMesh);
-    glDrawArrays(GL_TRIANGLES, 0, 3); 
+    //glUseProgram(iceCreamShader.ShaderProgram); 
+    //glBindVertexArray(iceCreamRenderer.QuadMesh);
+    //glDrawArrays(GL_TRIANGLES, 0, 3); 
     /* shape position vec3 */
     //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); 
 
