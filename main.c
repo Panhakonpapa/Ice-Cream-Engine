@@ -1,7 +1,5 @@
 #include "core/OpenGL.h"
-#include "core/Math.h"
 #include "core/IceCreamRender.h"
-#include "core/Entity.h"
 #include "core/imageLoader.h"
 #include <GLFW/glfw3.h>
 #include <complex.h>
@@ -10,7 +8,6 @@
 
 #define MAX_ENTITY 10
 
-Entity pool[MAX_ENTITY]; 
 
 
 void InputHandler(GLFWwindow *window) {
