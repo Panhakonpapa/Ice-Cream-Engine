@@ -46,9 +46,9 @@ mat4 mat4_identity() {
 mat4 iceCreamMat4Translate(float x, float y, float z) {
     mat4 results = mat4_identity();
     
-    results.m[3][0] += x; 
-    results.m[3][1] += y; 
-    results.m[3][2] += z; 
+    results.m[3][0] = x; 
+    results.m[3][1] = y; 
+    results.m[3][2] = z; 
 
     return results; 
 }

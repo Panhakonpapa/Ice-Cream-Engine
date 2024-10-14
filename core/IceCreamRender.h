@@ -1,5 +1,14 @@
-#ifndef CORE_H
-#define CORE_H
+#ifndef CORE_RENDER_H
+#define CORE_RENDER_H
+
+typedef  struct {
+
+  unsigned int vertexShader; 
+  unsigned int fragmentShader;
+  unsigned int ShaderProgram; 
+  unsigned int texture; 
+
+} GraphicShader;
 
 typedef struct {
 
@@ -9,25 +18,16 @@ typedef struct {
 
 } GraphicBuffer; 
 
-typedef  struct {
 
-  unsigned int vertexShader; 
-  unsigned int fragmentShader;
-  unsigned int ShaderProgram; 
-
-} GraphicShader;
   
-typedef  struct {
-  unsigned int QuadMesh; 
-}Graphic;
-
 /*GraphicBuffer iceCreamRenderBuffer; 
 GraphicShader iceCreamShader;  
-Graphic iceCreamRenderer; 
-*/
+Graphic iceCreamRenderer; */
 
 char* loadShaderFile(char* filePath); 
-unsigned int IceCreamCompileShader(GraphicShader* iceCreamShader, char* VertexShaderProgram, char* FragmentShaderProgram);  
+void IceCreamCompileShader(GraphicShader* iceCreamShader, char* VertexShaderProgram, char* FragmentShaderProgram);  
 unsigned int IceCreamRenderTringle(GraphicBuffer* iceCreamRenderBuffer); 
+unsigned int IceCreamTexture(char* filePath); 
+void iceCreamDraw(GraphicShader* Program,GraphicBuffer* iceCreamRenderBuffer);  
 
 #endif 

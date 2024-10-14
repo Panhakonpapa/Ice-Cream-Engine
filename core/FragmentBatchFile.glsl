@@ -1,10 +1,13 @@
 #version 330 core 
 
-in vec4 vertexColor; 
+in vec3 vertexColor; 
+in vec2 texterCoord; 
 
 out vec4 FragmentColor; 
 
+uniform sample2D ourtexture;
+
 void main() 
 {
-	FragmentColor = vertexColor; 
+	FragmentColor =  texture(ourTexture, TexCoord);
 }
