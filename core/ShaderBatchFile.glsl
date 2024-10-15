@@ -1,10 +1,8 @@
 #version 330 core 
 layout (location = 0) in vec3 positionPos; 
 layout (location = 1) in vec3 colorsPos; 
-layout (location = 2) in vec2 texterCoord;
 
 out vec3 vertexColor; 
-out vec2 texterCoordOut;  
 
 uniform vec4 transformation;
 
@@ -16,7 +14,6 @@ void main()
 
 	vertexColor = colorsPos;
 
-	texterCoord = texterCoordOut; 
 }
 
 

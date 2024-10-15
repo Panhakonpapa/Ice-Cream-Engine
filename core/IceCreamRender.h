@@ -1,33 +1,28 @@
-#ifndef CORE_RENDER_H
-#define CORE_RENDER_H
+#ifndef RENDER_CORE_H
+#define RENDER_CORE_H
 
-typedef  struct {
-
-  unsigned int vertexShader; 
-  unsigned int fragmentShader;
-  unsigned int ShaderProgram; 
-  unsigned int texture; 
-
-} GraphicShader;
+#include "OpenGL.h"
+#include "Entity.h"
+#include "Math.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
+    unsigned int ShaderProgram; 
+    unsigned int renderID; 
+}GraphicShader;
 
-  unsigned int VBO; 
-  unsigned int VAO; 
-  unsigned int EBO;
-
-} GraphicBuffer; 
-
-
-  
-/*GraphicBuffer iceCreamRenderBuffer; 
-GraphicShader iceCreamShader;  
-Graphic iceCreamRenderer; */
+typedef struct {
+    unsigned int VBO;
+    unsigned int VAO; 
+    unsigned int EBO;  
+} GraphicBuffer;
 
 char* loadShaderFile(char* filePath); 
-void IceCreamCompileShader(GraphicShader* iceCreamShader, char* VertexShaderProgram, char* FragmentShaderProgram);  
-unsigned int IceCreamRenderTringle(GraphicBuffer* iceCreamRenderBuffer); 
-unsigned int IceCreamTexture(char* filePath); 
-void iceCreamDraw(GraphicShader* Program,GraphicBuffer* iceCreamRenderBuffer);  
+void IceCreamCompileShader(char* VertexShaderProgram, char* FragmentShaderProgram);  
+void IceCreamRenderPipeline(); 
+void initialize_graphic();  
+void printInfo(char* filtPath);
+void draw();
 
 #endif 

@@ -47,6 +47,7 @@ int main() {
       printf("Failed to initialize GLAD");
       return -1;
   }
+  
 
 
   while (!glfwWindowShouldClose(window)) {
