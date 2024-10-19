@@ -1,12 +1,11 @@
+VERSION = 0.0.1
+
 CC = gcc
 CFLAGS = -Wall -g -std=c11 
-LDFLAGS = -lglfw -lGL -ldl -lm
+LDFLAGS = -lSDL2 -lGL -ldl -lm 
 
-# -Wpedantic -fsanitize=undefined -fsanitize=address 
-VERSION = 0.0.1
 # Source files
-SRC = main.c core/OpenGL.c core/iceCreamRender.c core/Math.c core/Entity.c 
-
+SRC = main.c core/glad.c core/iceCreamRender.c core/internalRender.c core/iceCreamGlobal.c core/io.c core/iceCreamRenderUtil.c core/time/time.c core/iceConfig/config.c core/input.c
 # Object files
 OBJ = $(SRC:.c=.o)
 # Final executable
@@ -17,7 +16,7 @@ all: $(EXEC)
 # Compiling Open GL loader 
 $(EXEC): $(OBJ)
 
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS) 
 
 #Compile source files 
 %.o:%.c
